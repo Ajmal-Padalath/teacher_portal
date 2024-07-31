@@ -14,6 +14,9 @@
         <a href="{{url('/log-out')}}">
             <button type="button" class="btn btn-danger">Logout</button>
         </a>
+        <a href="{{url('/teacher-dashboard?sort=1')}}">
+            <button type="button" class="btn btn-info">Sort</button>
+        </a>
         @if (count($studentsData) > 0)
             <table class="table table-striped">
                 <thead>
@@ -22,7 +25,7 @@
                     <th>Subject</th>
                     <th>Mark</th>
                     <th></th>
-                    <th>Actions</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,12 +35,16 @@
                             <td><input type="text" class="" id="edit_subject{{$student->id}}" value="{{$student->subject}}" disabled></td>
                             <td><input type="text" class="" id="edit_mark{{$student->id}}" value="{{$student->mark}}" disabled></td>
                             <td><p style="color: red" id="edit_student_message{{$student->id}}"></p></td>
-                            <td>
-                                <button type="button" class="btn btn-warning" onclick='editStudent({{$student->id}})'>Edit</button>
-                                <a href='#' onclick='confirmDelete({{"$student->id"}})'>
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </a>
-                            </td>
+                            @if ($student->teacher_id == $teacherId)
+                                <td>
+                                    <button type="button" class="btn btn-warning" onclick='editStudent({{$student->id}})'>Edit</button>
+                                    <a href='#' onclick='confirmDelete({{"$student->id"}})'>
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </a>
+                                </td>
+                            @else
+                                <td></td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
